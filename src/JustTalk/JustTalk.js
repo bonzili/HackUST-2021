@@ -5,7 +5,7 @@ import styles_default from "../styles";
 function JustTalk() {
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Details sdd</Text>
+            <Text>Details add</Text>
         </View>
     );
 }

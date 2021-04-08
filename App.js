@@ -78,6 +78,7 @@ function HomeScreen({ navigation }) {
         </SafeAreaView>
     );
 }
+
 const Stack = createStackNavigator();
 
 function App() {
