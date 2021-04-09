@@ -1,97 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-native';
-import styles_default from "./src/styles";
-import JustTalk from "./src/JustTalk/JustTalk";
-import TDML from "./src/TDML";
-import SendAMessage from "./src/SendAMessage";
+import * as React from 'react';
+import { AppRegistry } from 'react-native';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { name as appName } from './app.json';
+import App from './src/App';
 
-let username = "hi";
-
-function HomeScreen({ navigation }) {
+export default function Main() {
     return (
-        <SafeAreaView style={styles_default.container}>
-            <View style={styles_default.header}>
-                <Text style={styles_default.title}>
-                    Tales of the Old 老聲長談
-                </Text>
-                <Text style={styles_default.title}>
-                    Welcome Back, {username}
-                </Text>
-                <Text style={styles_default.title}>
-                    What do you want to do today?
-                </Text>
-            </View>
-            <View style={styles_default.horizontal_container}>
-                <View style={styles_default.buttonContainer}>
-                    <Button
-                        title="Just Talk"
-                        onPress={() => navigation.navigate('Just Talk')}
-                    />
-                </View>
-                <View style={styles_default.space} />
-                <View style={styles_default.buttonContainer}>
-                    <Button
-                        title="Send a Message"
-                        onPress={() => navigation.navigate('Send a Message')}
-                    />
-                </View>
-            </View>
-            <View style={styles_default.horizontal_container}>
-                <View style={styles_default.buttonContainer}>
-                    <Button
-                        title="Trip Down Memory Lane"
-                        onPress={() => navigation.navigate('Trip Down Memory Lane')}
-                    />
-                </View>
-                <View style={styles_default.space} />
-                <View style={styles_default.buttonContainer}>
-                    <Button
-                        title="Music"
-                        onPress={() => Alert.alert('Right button pressed')}
-                    />
-                </View>
-            </View>
-            <View style={styles_default.horizontal_container}>
-                <View style={styles_default.buttonContainer}>
-                    <Button
-                        title="Edit Profile"
-                        onPress={() => navigation.navigate('Just Talk')}
-                    />
-                </View>
-                <View style={styles_default.space} />
-                <View style={styles_default.buttonContainer}>
-                    <Button
-                        title="Add Contact"
-                        onPress={() => Alert.alert('Right button pressed')}
-                    />
-                </View>
-            </View>
-            <View style={styles_default.horizontal_container}>
-                <Button
-                    title="Help"
-                    onPress={() => Alert.alert('Right button pressed')}
-                />
-            </View>
-        </SafeAreaView>
+        <PaperProvider>
+            <App />
+        </PaperProvider>
     );
 }
 
-const Stack = createStackNavigator();
-
-function App() {
-    return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="Just Talk" component={JustTalk} />
-                <Stack.Screen name="Trip Down Memory Lane" component={TDML} />
-                <Stack.Screen name="Send a Message" component={SendAMessage} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    );
-}
-
-export default App;
+AppRegistry.registerComponent(appName, () => Main);
