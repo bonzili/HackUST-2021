@@ -12,7 +12,7 @@ import { Asset } from 'expo-asset';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
-
+import { executeQueries } from './voicebot'
 class Icon {
     constructor(module, width, height) {
         this.module = module;
@@ -21,6 +21,11 @@ class Icon {
         Asset.fromModule(this.module).downloadAsync();
     }
 }
+
+const projectId = "grandpa-spsw"
+const sessionId = 1
+const queires = ['how are you', "i am fine", 'hello']
+const languageCode = "en"
 
 const ICON_RECORD_BUTTON = new Icon(require('./assets/images/record_button.png'), 70, 119);
 const ICON_RECORDING = new Icon(require('./assets/images/record_icon.png'), 20, 14);
@@ -196,6 +201,7 @@ export default class App extends React.Component {
     _onRecordPressed = () => {
         if (this.state.isRecording) {
             this._stopRecordingAndEnablePlayback();
+            executeQueries(projectId, sessionId, queires, languageCode);
         } else {
             this._stopPlaybackAndBeginRecording();
         }

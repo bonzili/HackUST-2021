@@ -3,8 +3,8 @@
   "expoServerPort": 19000,
   "packagerPort": 19000,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://u7-sjw.anonymous.hackust-2021.exp.direct",
+  "packagerNgrokUrl": "https://packager.u7-sjw.anonymous.hackust-2021.exp.direct",
+  "ngrokPid": 33822,
   "webpackServerPort": null
 }
