@@ -1,0 +1,17 @@
+﻿[
+  {
+    "count" : 3
+  },
+  {
+    "Date": "04/10/2021",
+    "Sentiment_level": 1
+  },
+  {
+    "Date": "05/10/2021",
+    "Sentiment_level": 3
+  },
+  {
+    "Date": "06/10/2021",
+    "Sentiment_level": 2
+  }
+]
