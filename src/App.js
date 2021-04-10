@@ -7,6 +7,7 @@ import styles_default from "./styles";
 import JustTalk from "./JustTalk/JustTalk";
 import TDML from "./TDML";
 import SendAMessage from "./SendAMessage";
+import Chart from "./Chart";
 
 let username = "hi";
 
@@ -72,7 +73,7 @@ function HomeScreen({ navigation }) {
             <View style={styles_default.horizontal_container}>
                 <Button
                     title="Help"
-                    onPress={() => Alert.alert('Right button pressed')}
+                    onPress={() => navigation.navigate('Chart')}
                 />
             </View>
         </SafeAreaView>
@@ -89,6 +90,7 @@ function App() {
                 <Stack.Screen name="Just Talk" component={JustTalk} />
                 <Stack.Screen name="Trip Down Memory Lane" component={TDML} />
                 <Stack.Screen name="Send a Message" component={SendAMessage} />
+                <Stack.Screen name="Chart" component={Chart} />
             </Stack.Navigator>
         </NavigationContainer>
     );
