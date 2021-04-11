@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {Component} from 'react';
+import { GiftedChat } from 'react-native-gifted-chat';
 import {
     Dimensions,
     Image,
@@ -7,11 +8,18 @@ import {
     Text,
     TouchableHighlight,
     View,
+    NativeModule,
+    NativeModules,
+    Alert
+
 } from 'react-native';
 import { Asset } from 'expo-asset';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
+
+import { Dialogflow_V2 } from 'react-native-dialogflow';
+import { dialogflowConfig } from './env';
 
 class Icon {
     constructor(module, width, height) {
@@ -42,6 +50,16 @@ const LIVE_COLOR = '#FF0000';
 const DISABLED_OPACITY = 0.5;
 const RATE_SCALE = 3.0;
 
+
+const projectId = 'grandpa-spsw'
+const keyFilename = '../../assets/grandpa-spsw-000dac0df62d.json';
+
+
+const BOT_USER = {
+    _id: 2,
+    name: 'FAQ Bot',
+    avatar: 'https://i.imgur.com/7k12EPD.png'
+  };
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -63,6 +81,20 @@ export default class App extends React.Component {
             shouldCorrectPitch: true,
             volume: 1.0,
             rate: 1.0,
+            messages: [
+                {
+                  _id: 1,
+                  text: `Hi! I am the FAQ bot 🤖 from Jscrambler.\n\nHow may I help you with today?`,
+                  createdAt: new Date(),
+                  user: BOT_USER // <= note this
+                }
+              ]
+        };
+        this.dialogflowInfo = {
+            projectId: "grandpa-spsw",
+            sessionId: 1,
+            queries: ["I am sad", "i am happy"],
+            languageCode: 'en',
         };
         this.recordingSettings = JSON.parse(JSON.stringify(Audio.RECORDING_OPTIONS_PRESET_LOW_QUALITY));
         // // UNCOMMENT THIS TO TEST maxFileSize:
@@ -71,7 +103,108 @@ export default class App extends React.Component {
 
     componentDidMount() {
         this._askForPermissions();
+        this._load_stuff();
+    //    this._load_dialogflow();
     }
+    
+    async _load_stuff() {
+        await Dialogflow_V2.setConfiguration(
+            dialogflowConfig.client_email,
+            dialogflowConfig.private_key,
+            Dialogflow_V2.LANG_ENGLISH_US,
+            dialogflowConfig.project_id
+        );
+    };
+
+    onSend(messages = []) {
+        this.setState(previousState => ({
+          messages: GiftedChat.append(previousState.messages, messages)
+        }));
+    
+        let message = messages[0].text;
+        Dialogflow_V2.requestQuery(
+          message,
+          result => this.handleGoogleResponse(result),
+          error => console.log(error)
+        );
+    }
+
+    handleGoogleResponse(result) {
+        console.log(result);
+        let text = result.queryResult.fulfillmentMessages[0].text.text[0];
+        this.sendBotResponse(text);
+    }
+
+    sendBotResponse(text) {
+        let msg = {
+          _id: this.state.messages.length + 1,
+          text,
+          createdAt: new Date(),
+          user: BOT_USER
+        };
+    
+        this.setState(previousState => ({
+          messages: GiftedChat.append(previousState.messages, [msg])
+        }));
+      }
+    
+    // _load_dialogflow = async () => {
+    //     const client = await new APIClient({ grpc })
+    //     const sessionClient = await new dialogflow.SessionsClient();
+    // };
+
+    // _detectIntent = async (projectId, sessionId, query, contexts,languageCode) => {
+    //     const sessionPath = sessionClient.projectAgentSessionPath(
+    //         projectId,
+    //         sessionId
+    //       );
+        
+    //       // The text query request.
+    //       const request = {
+    //         session: sessionPath,
+    //         queryInput: {
+    //           text: {
+    //             text: query,
+    //             languageCode: languageCode,
+    //           },
+    //         },
+    //       };
+        
+    //       if (contexts && contexts.length > 0) {
+    //         request.queryParams = {
+    //           contexts: contexts,
+    //         };
+    //       }
+        
+    //       const responses = await sessionClient.detectIntent(request);
+    //       return responses[0];
+    // };
+
+    // _executeQueries = async (projectId, sessionId, queries, languageCode) => {
+    //     let context;
+    //     let intentResponse;
+    //     for (const query of queries) {
+    //         try {
+    //         console.log(`Sending Query: ${query}`);
+    //         intentResponse = await detectIntent(
+    //             projectId,
+    //             sessionId,
+    //             query,
+    //             context,
+    //             languageCode
+    //         );
+    //   console.log('Detected intent');
+    //   console.log(
+    //     `Fulfillment Text: ${intentResponse.queryResult.fulfillmentText}`
+    //         );
+    //         // Use the context from this response for next queries
+    //         context = intentResponse.queryResult.outputContexts;
+    //         } catch (error) {
+    //         console.log(error);
+    //         }
+    //     }
+
+    // }
 
     _askForPermissions = async () => {
         const response = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
@@ -333,132 +466,15 @@ export default class App extends React.Component {
         }
 
         return (
-            <View style={styles.container}>
-                <View
-                    style={[
-                        styles.halfScreenContainer,
-                        {
-                            opacity: this.state.isLoading ? DISABLED_OPACITY : 1.0,
-                        },
-                    ]}>
-                    <View />
-                    <View style={styles.recordingContainer}>
-                        <View />
-                        <TouchableHighlight
-                            underlayColor={BACKGROUND_COLOR}
-                            style={styles.wrapper}
-                            onPress={this._onRecordPressed}
-                            disabled={this.state.isLoading}>
-                            <Image style={styles.image} source={ICON_RECORD_BUTTON.module} />
-                        </TouchableHighlight>
-                        <View style={styles.recordingDataContainer}>
-                            <View />
-                            <Text style={[styles.liveText]}>
-                                {this.state.isRecording ? 'LIVE' : ''}
-                            </Text>
-                            <View style={styles.recordingDataRowContainer}>
-                                <Image
-                                    style={[styles.image, { opacity: this.state.isRecording ? 1.0 : 0.0 }]}
-                                    source={ICON_RECORDING.module}
-                                />
-                                <Text style={[styles.recordingTimestamp]}>
-                                    {this._getRecordingTimestamp()}
-                                </Text>
-                            </View>
-                            <View />
-                        </View>
-                        <View />
-                    </View>
-                    <View />
-                </View>
-                <View
-                    style={[
-                        styles.halfScreenContainer,
-                        {
-                            opacity:
-                                !this.state.isPlaybackAllowed || this.state.isLoading ? DISABLED_OPACITY : 1.0,
-                        },
-                    ]}>
-                    <View />
-                    <View style={styles.playbackContainer}>
-                        <Slider
-                            style={styles.playbackSlider}
-                            trackImage={ICON_TRACK_1.module}
-                            thumbImage={ICON_THUMB_1.module}
-                            value={this._getSeekSliderPosition()}
-                            onValueChange={this._onSeekSliderValueChange}
-                            onSlidingComplete={this._onSeekSliderSlidingComplete}
-                            disabled={!this.state.isPlaybackAllowed || this.state.isLoading}
-                        />
-                        <Text style={[styles.playbackTimestamp]}>
-                            {this._getPlaybackTimestamp()}
-                        </Text>
-                    </View>
-                    <View style={[styles.buttonsContainerBase, styles.buttonsContainerTopRow]}>
-                        <View style={styles.volumeContainer}>
-                            <TouchableHighlight
-                                underlayColor={BACKGROUND_COLOR}
-                                style={styles.wrapper}
-                                onPress={this._onMutePressed}
-                                disabled={!this.state.isPlaybackAllowed || this.state.isLoading}>
-                                <Image
-                                    style={styles.image}
-                                    source={this.state.muted ? ICON_MUTED_BUTTON.module : ICON_UNMUTED_BUTTON.module}
-                                />
-                            </TouchableHighlight>
-                            <Slider
-                                style={styles.volumeSlider}
-                                trackImage={ICON_TRACK_1.module}
-                                thumbImage={ICON_THUMB_2.module}
-                                value={1}
-                                onValueChange={this._onVolumeSliderValueChange}
-                                disabled={!this.state.isPlaybackAllowed || this.state.isLoading}
-                            />
-                        </View>
-                        <View style={styles.playStopContainer}>
-                            <TouchableHighlight
-                                underlayColor={BACKGROUND_COLOR}
-                                style={styles.wrapper}
-                                onPress={this._onPlayPausePressed}
-                                disabled={!this.state.isPlaybackAllowed || this.state.isLoading}>
-                                <Image
-                                    style={styles.image}
-                                    source={this.state.isPlaying ? ICON_PAUSE_BUTTON.module : ICON_PLAY_BUTTON.module}
-                                />
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                underlayColor={BACKGROUND_COLOR}
-                                style={styles.wrapper}
-                                onPress={this._onStopPressed}
-                                disabled={!this.state.isPlaybackAllowed || this.state.isLoading}>
-                                <Image style={styles.image} source={ICON_STOP_BUTTON.module} />
-                            </TouchableHighlight>
-                        </View>
-                        <View />
-                    </View>
-                    <View style={[styles.buttonsContainerBase, styles.buttonsContainerBottomRow]}>
-                        <Text style={[styles.timestamp]}>Rate:</Text>
-                        <Slider
-                            style={styles.rateSlider}
-                            trackImage={ICON_TRACK_1.module}
-                            thumbImage={ICON_THUMB_1.module}
-                            value={this.state.rate / RATE_SCALE}
-                            onSlidingComplete={this._onRateSliderSlidingComplete}
-                            disabled={!this.state.isPlaybackAllowed || this.state.isLoading}
-                        />
-                        <TouchableHighlight
-                            underlayColor={BACKGROUND_COLOR}
-                            style={styles.wrapper}
-                            onPress={this._onPitchCorrectionPressed}
-                            disabled={!this.state.isPlaybackAllowed || this.state.isLoading}>
-                            <Text>
-                                PC: {this.state.shouldCorrectPitch ? 'yes' : 'no'}
-                            </Text>
-                        </TouchableHighlight>
-                    </View>
-                    <View />
-                </View>
-            </View>
+            <View style={{ flex: 1, backgroundColor: '#fff' }}>
+        <GiftedChat
+          messages={this.state.messages}
+          onSend={messages => this.onSend(messages)}
+          user={{
+            _id: 1
+          }}
+        />
+      </View>
         );
     }
 }
