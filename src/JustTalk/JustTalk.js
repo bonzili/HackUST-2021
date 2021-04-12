@@ -10,13 +10,20 @@ import {
     View,
     NativeModule,
     NativeModules,
-    Alert
+    Alert,
+    Button
 
 } from 'react-native';
 import { Asset } from 'expo-asset';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
+import { Constants, Google } from 'expo';
+import * as Google2 from 'expo-google-app-auth';
+// import { uuid } from "uuid";
+// import dialogflow from "@google-cloud/dialogflow";
+
+import { Storage } from '@google-cloud/storage';
 
 import { Dialogflow_V2 } from 'react-native-dialogflow';
 import { dialogflowConfig } from './env';
@@ -52,7 +59,10 @@ const RATE_SCALE = 3.0;
 
 
 const projectId = 'grandpa-spsw'
-const keyFilename = '../../assets/grandpa-spsw-000dac0df62d.json';
+
+
+const keyFilename = '/Users/matthewchuang/Documents/GitHub/HackUST-2021/assets/grandpa-spsw-771e9f21ab03.json';
+const storage = new Storage({projectId, keyFilename});
 
 
 const BOT_USER = {
@@ -101,20 +111,33 @@ export default class App extends React.Component {
         // this.recordingSettings.android['maxFileSize'] = 12000;
     }
 
-    componentDidMount() {
-        this._askForPermissions();
-        this._load_stuff();
-    //    this._load_dialogflow();
+    async listBuckets() {
+        try {
+          const [buckets] = await storage.getBuckets();
+      
+          console.log('Buckets:');
+          buckets.forEach(bucket => {
+            console.log(bucket.name);
+          });
+        } catch (err) {
+          console.error('ERROR:', err);
+          
+        }
     }
     
-    async _load_stuff() {
-        await Dialogflow_V2.setConfiguration(
+    componentDidMount() {
+        this._askForPermissions();
+        this.listBuckets();
+        Dialogflow_V2.setConfiguration(
             dialogflowConfig.client_email,
             dialogflowConfig.private_key,
             Dialogflow_V2.LANG_ENGLISH_US,
             dialogflowConfig.project_id
         );
-    };
+    //    this._load_dialogflow();
+    }
+    
+    
 
     onSend(messages = []) {
         this.setState(previousState => ({
