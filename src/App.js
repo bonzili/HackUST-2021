@@ -8,6 +8,7 @@ import JustTalk from "./JustTalk/JustTalk";
 import TDML from "./TDML";
 import SendAMessage from "./SendAMessage";
 import Chart from "./Chart";
+import Profile from "./Profile/Profile";
 
 let username = "hi";
 
@@ -59,7 +60,7 @@ function HomeScreen({ navigation }) {
                 <View style={styles_default.buttonContainer}>
                     <Button
                         title="Edit Profile"
-                        onPress={() => navigation.navigate('Just Talk')}
+                        onPress={() => navigation.navigate('Profile')}
                     />
                 </View>
                 <View style={styles_default.space} />
@@ -91,6 +92,7 @@ function App() {
                 <Stack.Screen name="Trip Down Memory Lane" component={TDML} />
                 <Stack.Screen name="Send a Message" component={SendAMessage} />
                 <Stack.Screen name="Chart" component={Chart} />
+                <Stack.Screen name="Profile" component={Profile} />
             </Stack.Navigator>
         </NavigationContainer>
     );

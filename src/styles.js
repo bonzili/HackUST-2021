@@ -10,6 +10,7 @@ const styles_default = StyleSheet.create({
     title: {
         textAlign: 'center',
         marginVertical: 8,
+        color: '#011F8C',
     },
     header: {
         flex: 4,
