@@ -1,15 +1,14 @@
-let testing = require('./chart_data.json')
-console.log(testing[0]["count"])
-console.log(testing[1]["Date"])
-var temp = [];
-var haha = [{data:temp}];
+var profile = new Object();
+profile.name = "Raj";
+profile.gender = "M";
+profile.age  = 32;
+profile.birth_month = 4;
+profile.birth_date = 17;
+profile.telnum = 12345678;
+profile.cloud = false;
+var profile_json= JSON.stringify(profile);
+console.log(profile_json)
 
-let i;
-var label = [{}];
-console.log(typeof label)
-for (i = 1; i <= testing[0]["count"]; i++) {
-    temp.push(testing[i]["Sentiment_level"])
-}
-
-console.log(temp)
-console.log(haha)
+var testing = require('./Profile/profiledata.json')
+var read_profile = JSON.parse(profile_json)
+console.log(testing["name"])
