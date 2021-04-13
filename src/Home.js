@@ -1,53 +1,50 @@
-import * as React from 'react';
-import {Button, View, Text, SafeAreaView, Alert} from 'react-native';
-import styles_default from "../styles";
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
+import {StyleSheet, Button, View, SafeAreaView, Text, Alert, AsyncStorage} from 'react-native';
+import styles_default from "./styles";
 
-class Profile extends React.Component{
+let name = "User";
+
+class HomeScreen extends React.Component{
     constructor(props) {
         super(props);
-        try {
-            const profile_data = require('./profiledata.json');
-            this.name = profile_data["name"]
-            this.gender = profile_data["gender"]
-            this.age = profile_data["age"]
-            this.birth_month = profile_data["birth_month"]
-            this.birth_date = profile_data["birth_date"]
-            this.telnum = profile_data["telnum"]
-            this.cloud = profile_data["cloud"]
-            this.child = profile_data["child"]
-        }
-        catch (err){
-            this.props.navigation.navigate('Edit Profile')
-        }
+        this._retrievename();
     }
+
+
+    _retrievename = async () => {
+        try {
+            const value = await AsyncStorage.getItem('name');
+            if (value !== null) {
+                name = value
+            }
+        } catch (error) {
+            // Error retrieving data
+        }
+    };
+
     render() {
         return (
             <SafeAreaView style={styles_default.container}>
                 <View style={styles_default.header}>
                     <Text style={styles_default.title}>
-                        Tales of the Old 老聲長談
+                        Welcome Back,
                     </Text>
                     <Text style={styles_default.title}>
-                        Welcome Back, {}
-                    </Text>
-                    <Text style={styles_default.title}>
-                        What do you want to do today?
+                        {name}
                     </Text>
                 </View>
                 <View style={styles_default.horizontal_container}>
                     <View style={styles_default.buttonContainer}>
                         <Button
                             title="Just Talk"
-                            onPress={() => navigation.navigate('Just Talk')}
+                            onPress={() => this.props.navigation.navigate('Just Talk')}
                         />
                     </View>
-                    <View style={styles_default.space} />
+                    <View style={styles_default.space}/>
                     <View style={styles_default.buttonContainer}>
                         <Button
                             title="Send a Message"
-                            onPress={() => navigation.navigate('Send a Message')}
+                            onPress={() => this.props.navigation.navigate('Send a Message')}
                         />
                     </View>
                 </View>
@@ -55,10 +52,10 @@ class Profile extends React.Component{
                     <View style={styles_default.buttonContainer}>
                         <Button
                             title="Trip Down Memory Lane"
-                            onPress={() => navigation.navigate('Trip Down Memory Lane')}
+                            onPress={() => this.props.navigation.navigate('Trip Down Memory Lane')}
                         />
                     </View>
-                    <View style={styles_default.space} />
+                    <View style={styles_default.space}/>
                     <View style={styles_default.buttonContainer}>
                         <Button
                             title="Music"
@@ -70,10 +67,10 @@ class Profile extends React.Component{
                     <View style={styles_default.buttonContainer}>
                         <Button
                             title="Edit Profile"
-                            onPress={() => navigation.navigate('Profile')}
+                            onPress={() => this.props.navigation.navigate('Profile')}
                         />
                     </View>
-                    <View style={styles_default.space} />
+                    <View style={styles_default.space}/>
                     <View style={styles_default.buttonContainer}>
                         <Button
                             title="Add Contact"
@@ -84,7 +81,7 @@ class Profile extends React.Component{
                 <View style={styles_default.horizontal_container}>
                     <Button
                         title="Help"
-                        onPress={() => navigation.navigate('Chart')}
+                        onPress={() => this.props.navigation.navigate('Chart')}
                     />
                 </View>
             </SafeAreaView>
@@ -92,4 +89,4 @@ class Profile extends React.Component{
     }
 }
 
-export default Profile;
+export default HomeScreen;

@@ -8,6 +8,8 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo-google-fonts/inter": "^0.1.0",
+    "@react-native-async-storage/async-storage": "^1.15.2",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.4",
@@ -15,9 +17,11 @@
     "apsl-react-native-button": "^3.1.1",
     "axios": "^0.21.1",
     "core": "unimodules/core",
-    "expo": "~40.0.0",
+    "expo": "^40.0.1",
+    "expo-app-loading": "^1.0.1",
     "expo-asset": "^8.2.2",
     "expo-av": "~8.7.0",
+    "expo-font": "~8.4.0",
     "expo-status-bar": "~1.0.3",
     "python-shell": "^3.0.0",
     "react-dom": "16.13.1",
@@ -33,6 +37,7 @@
     "react-native-svg": "12.1.0",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
+    "react-navigation": "^4.4.4",
     "rn-fetch-blob": "^0.12.0",
     "unimodules-permissions-interface": "~5.4.0",
     "xmlhttprequest": "^1.8.0"
