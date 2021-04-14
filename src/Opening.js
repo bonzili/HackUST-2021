@@ -2,7 +2,7 @@ import * as React from 'react';
 import {View, Text, StyleSheet, Alert, SafeAreaView, AsyncStorage, TouchableOpacity,ImageBackground} from 'react-native';
 import styles_default from "./styles";
 import { Button } from "react-native-elements";
-import Icon from "react-native-vector-icons/dist/MaterialCommunityIcons";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 let name = "User";
 
@@ -27,13 +27,16 @@ class Opening extends React.Component{
     render() {
         return (
             <SafeAreaView style={styles_default.container}>
-                <Button
-                    icon={
-                        <Icon name="menu" size={30} color="#FFB808" />
-                    }
-                    type="clear"
-                />
-                <View style={styles_default.header}>
+                <View style={{alignItems: 'flex-end', justifyContent: 'flex-end',flex:1,marginRight:10}}>
+                    <Button
+                        icon={
+                            <Icon name="bars" size={35} color="#FFB808" />
+                        }
+                        type="clear"
+                        onPress={() => this.props.navigation.navigate('Home')}
+                    />
+                </View>
+                <View style={[styles_default.header,{flex:3}]}>
                     <Text style={[styles_default.title,{fontSize:35, marginVertical: 0}]}>
                         Welcome Back,
                     </Text>

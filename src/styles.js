@@ -38,6 +38,7 @@ const styles_default = StyleSheet.create({
     },
     buttonContainer: {
         flex: 1,
+        borderRadius: 8,
     }
 });
 
