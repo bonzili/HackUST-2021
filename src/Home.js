@@ -47,7 +47,7 @@ class HomeScreen extends React.Component{
                     <View style={styles_default.buttonContainer}>
                         <Button
                             title={"Send a Message"}
-                            onPress={() => this.props.navigation.navigate('Send a Message')}
+                            onPress={() => Alert.alert('To be implemented')}
                             titleStyle={{fontFamily:'QuicksandBold',color: '#237CA1',fontSize:25}}
                             buttonStyle={{paddingVertical:30,borderRadius: 15 ,backgroundColor:'#FFB800'}}
                         />
@@ -66,7 +66,7 @@ class HomeScreen extends React.Component{
                     <View style={styles_default.buttonContainer}>
                         <Button
                             title="Mood Tracker"
-                            onPress={() => this.props.navigation.navigate('Opening Page')}
+                            onPress={() => this.props.navigation.navigate('Chart')}
                             titleStyle={{fontFamily:'QuicksandBold',color: '#237CA1',fontSize:20}}
                             buttonStyle={{paddingVertical:40,borderRadius: 15 ,backgroundColor:'#FF8654'}}
                         />
@@ -85,7 +85,7 @@ class HomeScreen extends React.Component{
                     <View style={styles_default.buttonContainer}>
                         <Button
                             title="Add Contact"
-                            onPress={() => Alert.alert('Right button pressed')}
+                            onPress={() => Alert.alert('To be implemented')}
                             titleStyle={{fontFamily:'QuicksandBold',color: '#237CA1',fontSize:20}}
                             buttonStyle={{paddingVertical:40,borderRadius: 15 ,backgroundColor:'#7DD8FF'}}
                         />
@@ -94,7 +94,7 @@ class HomeScreen extends React.Component{
                 <View style={[styles_default.horizontal_container,{flex:1,marginBottom:10}]}>
                     <Button
                         title="Help"
-                        onPress={() => this.props.navigation.navigate('Chart')}
+                        onPress={() => Alert.alert('To be implemented')}
                         titleStyle={{fontFamily:'QuicksandBold',color: '#FFB800',fontSize:20}}
                         buttonStyle={{borderRadius: 15,paddingHorizontal:150,backgroundColor:'#B01A1A'}}
                     />
