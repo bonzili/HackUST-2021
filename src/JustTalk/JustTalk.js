@@ -37,7 +37,7 @@ const ICON_THUMB_1 = new Icon(require('./assets/images/thumb_1.png'), 18, 19);
 const ICON_THUMB_2 = new Icon(require('./assets/images/thumb_2.png'), 15, 19);
 
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get('window');
-const BACKGROUND_COLOR = '#FFFFFF';
+const BACKGROUND_COLOR = '#fffde9';
 const LIVE_COLOR = '#FF0000';
 const DISABLED_OPACITY = 0.5;
 const RATE_SCALE = 3.0;
@@ -368,93 +368,6 @@ export default class App extends React.Component {
                             <View />
                         </View>
                         <View />
-                    </View>
-                    <View />
-                </View>
-                <View
-                    style={[
-                        styles.halfScreenContainer,
-                        {
-                            opacity:
-                                !this.state.isPlaybackAllowed || this.state.isLoading ? DISABLED_OPACITY : 1.0,
-                        },
-                    ]}>
-                    <View />
-                    <View style={styles.playbackContainer}>
-                        <Slider
-                            style={styles.playbackSlider}
-                            trackImage={ICON_TRACK_1.module}
-                            thumbImage={ICON_THUMB_1.module}
-                            value={this._getSeekSliderPosition()}
-                            onValueChange={this._onSeekSliderValueChange}
-                            onSlidingComplete={this._onSeekSliderSlidingComplete}
-                            disabled={!this.state.isPlaybackAllowed || this.state.isLoading}
-                        />
-                        <Text style={[styles.playbackTimestamp]}>
-                            {this._getPlaybackTimestamp()}
-                        </Text>
-                    </View>
-                    <View style={[styles.buttonsContainerBase, styles.buttonsContainerTopRow]}>
-                        <View style={styles.volumeContainer}>
-                            <TouchableHighlight
-                                underlayColor={BACKGROUND_COLOR}
-                                style={styles.wrapper}
-                                onPress={this._onMutePressed}
-                                disabled={!this.state.isPlaybackAllowed || this.state.isLoading}>
-                                <Image
-                                    style={styles.image}
-                                    source={this.state.muted ? ICON_MUTED_BUTTON.module : ICON_UNMUTED_BUTTON.module}
-                                />
-                            </TouchableHighlight>
-                            <Slider
-                                style={styles.volumeSlider}
-                                trackImage={ICON_TRACK_1.module}
-                                thumbImage={ICON_THUMB_2.module}
-                                value={1}
-                                onValueChange={this._onVolumeSliderValueChange}
-                                disabled={!this.state.isPlaybackAllowed || this.state.isLoading}
-                            />
-                        </View>
-                        <View style={styles.playStopContainer}>
-                            <TouchableHighlight
-                                underlayColor={BACKGROUND_COLOR}
-                                style={styles.wrapper}
-                                onPress={this._onPlayPausePressed}
-                                disabled={!this.state.isPlaybackAllowed || this.state.isLoading}>
-                                <Image
-                                    style={styles.image}
-                                    source={this.state.isPlaying ? ICON_PAUSE_BUTTON.module : ICON_PLAY_BUTTON.module}
-                                />
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                underlayColor={BACKGROUND_COLOR}
-                                style={styles.wrapper}
-                                onPress={this._onStopPressed}
-                                disabled={!this.state.isPlaybackAllowed || this.state.isLoading}>
-                                <Image style={styles.image} source={ICON_STOP_BUTTON.module} />
-                            </TouchableHighlight>
-                        </View>
-                        <View />
-                    </View>
-                    <View style={[styles.buttonsContainerBase, styles.buttonsContainerBottomRow]}>
-                        <Text style={[styles.timestamp]}>Rate:</Text>
-                        <Slider
-                            style={styles.rateSlider}
-                            trackImage={ICON_TRACK_1.module}
-                            thumbImage={ICON_THUMB_1.module}
-                            value={this.state.rate / RATE_SCALE}
-                            onSlidingComplete={this._onRateSliderSlidingComplete}
-                            disabled={!this.state.isPlaybackAllowed || this.state.isLoading}
-                        />
-                        <TouchableHighlight
-                            underlayColor={BACKGROUND_COLOR}
-                            style={styles.wrapper}
-                            onPress={this._onPitchCorrectionPressed}
-                            disabled={!this.state.isPlaybackAllowed || this.state.isLoading}>
-                            <Text>
-                                PC: {this.state.shouldCorrectPitch ? 'yes' : 'no'}
-                            </Text>
-                        </TouchableHighlight>
                     </View>
                     <View />
                 </View>

@@ -1,15 +1,19 @@
-import {StyleSheet} from "react-native";
+import {Image, StyleSheet, View} from 'react-native';
+import React from "react";
 
 const styles_default = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         flexDirection: 'column',
-        marginHorizontal: 25,
+        backgroundColor: '#FFFDE9',
     },
     title: {
+        fontFamily: 'AbrilFatface',
         textAlign: 'center',
         marginVertical: 8,
+        color: '#011F8C',
+        fontSize: 25,
     },
     header: {
         flex: 4,
@@ -34,7 +38,9 @@ const styles_default = StyleSheet.create({
     },
     buttonContainer: {
         flex: 1,
+        borderRadius: 8,
     }
 });
 
 export default styles_default;
+
