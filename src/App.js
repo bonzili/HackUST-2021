@@ -12,6 +12,7 @@ import Profile from "./Profile/Profile";
 import HomeScreen from "./Home";
 import * as Font from 'expo-font';
 import Opening from "./Opening";
+import EditProfile from "./Profile/Edit Profile";
 
 class AcType extends React.Component{
     constructor(props) {
@@ -42,7 +43,7 @@ class AcType extends React.Component{
         try {
             const value = await AsyncStorage.getItem('child');
             if (value !== null) {
-                if (value === 'True'){
+                if (value){
                     this.props.navigation.replace('Opening Page');       //Account Type: Child
                 }else{
                     this.props.navigation.replace('Opening Page')      //Account Type: Elderly
@@ -77,7 +78,7 @@ class AcType extends React.Component{
                     <View style={styles_default.buttonContainer}>
                         <Button
                             title="Child"
-                            onPress={() => {this._storeData('True'); this.props.navigation.replace('Home')}}
+                            onPress={() => {this._storeData(true); this.props.navigation.replace('Home')}}
                         />
                     </View>
                 </View>
@@ -85,7 +86,7 @@ class AcType extends React.Component{
                     <View style={styles_default.buttonContainer}>
                         <Button
                             title="Elderly"
-                            onPress={() => {this._storeData('False'); this.props.navigation.replace('Home')}}
+                            onPress={() => {this._storeData(false); this.props.navigation.replace('Home')}}
                         />
                     </View>
                 </View>
@@ -101,14 +102,15 @@ function App() {
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Account Type"
                              screenOptions={{headerStyle: {backgroundColor: '#B01A1A',}, headerTintColor: '#fff',}}>
-                <Stack.Screen name= "Account Type" component={AcType} />
-                <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="Just Talk" component={JustTalk} />
-                <Stack.Screen name="Trip Down Memory Lane" component={TDML} />
-                <Stack.Screen name="Send a Message" component={SendAMessage} />
-                <Stack.Screen name="Chart" component={Chart} />
-                <Stack.Screen name="Profile" component={Profile} />
-                <Stack.Screen options={{headerShown: false}} name="Opening Page" component={Opening} />
+                <Stack.Screen options={{title: ''}} name= "Account Type" component={AcType} />
+                <Stack.Screen options={{title: ''}} name="Home" component={HomeScreen} />
+                <Stack.Screen options={{title: ''}} name="Just Talk" component={JustTalk} />
+                <Stack.Screen options={{title: ''}} name="Trip Down Memory Lane" component={TDML} />
+                <Stack.Screen options={{title: ''}} name="Send a Message" component={SendAMessage} />
+                <Stack.Screen options={{title: ''}} name="Chart" component={Chart} />
+                <Stack.Screen options={{title: ''}} name="Profile" component={Profile} />
+                <Stack.Screen options={{title: ''}} name="Edit Profile" component={EditProfile} />
+                <Stack.Screen options={{headerShown: false,title:''}} name="Opening Page" component={Opening} />
             </Stack.Navigator>
         </NavigationContainer>
     );

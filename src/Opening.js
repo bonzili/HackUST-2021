@@ -17,7 +17,9 @@ class Opening extends React.Component{
         try {
             const value = await AsyncStorage.getItem('name');
             if (value !== null) {
-                name = value
+                name = value;
+            }else{
+                name = "User";
             }
         } catch (error) {
             // Error retrieving data
@@ -30,7 +32,7 @@ class Opening extends React.Component{
                 <View style={{alignItems: 'flex-end', justifyContent: 'flex-end',flex:1,marginRight:10}}>
                     <Button
                         icon={
-                            <Icon name="bars" size={35} color="#FFB808" />
+                            <Icon name="home" size={35} color="#FFB808" />
                         }
                         type="clear"
                         onPress={() => this.props.navigation.navigate('Home')}

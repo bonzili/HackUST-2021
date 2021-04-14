@@ -1,8 +1,6 @@
 import * as React from 'react';
-import {Button, View, Text, SafeAreaView, Alert} from 'react-native';
+import {Button, View, Text, SafeAreaView, Alert, AsyncStorage} from 'react-native';
 import styles_default from "../styles";
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
 class Profile extends React.Component{
     constructor(props) {
@@ -22,6 +20,25 @@ class Profile extends React.Component{
             this.props.navigation.navigate('Edit Profile')
         }
     }
+
+    componentDidMount() {
+        this._retrieveProfileExist();
+    }
+
+    _retrieveProfileExist = async () => {
+        try {
+            const value = await AsyncStorage.getItem('ProfileExist');
+            if (value !== null) {
+                console.log(value);
+            }
+            if (value == null){
+                this.props.navigation.replace('Edit Profile')
+            }
+        } catch (error) {
+            this.props.navigation.replace('Edit Profile')
+        }
+    };
+
     render() {
         return (
             <SafeAreaView style={styles_default.container}>
