@@ -11,6 +11,7 @@ import Chart from "./Chart";
 import Profile from "./Profile/Profile";
 import HomeScreen from "./Home";
 import * as Font from 'expo-font';
+import Opening from "./Opening";
 
 class AcType extends React.Component{
     constructor(props) {
@@ -23,8 +24,11 @@ class AcType extends React.Component{
     async componentDidMount() {
         try {
             await Font.loadAsync({
-                Quicksand: require('../assets/fonts/Quicksand.ttf'),
-                AbrilFatface: require('../assets/fonts/AbrilFatface.ttf')
+                Quicksand: require('../assets/fonts/Quicksand-Regular.ttf'),
+                QuicksandBold: require('../assets/fonts/Quicksand-Bold.ttf'),
+                QuicksandMedium: require('../assets/fonts/Quicksand-Medium.ttf'),
+                AbrilFatface: require('../assets/fonts/AbrilFatface.ttf'),
+                ElsieSwashCaps: require('../assets/fonts/ElsieSwashCaps-Black.ttf'),
             })
             this.setState({ fontLoaded: true })
         } catch (error) {
@@ -39,9 +43,9 @@ class AcType extends React.Component{
             const value = await AsyncStorage.getItem('child');
             if (value !== null) {
                 if (value === 'True'){
-                    this.props.navigation.replace('Home');       //Account Type: Child
+                    this.props.navigation.replace('Opening Page');       //Account Type: Child
                 }else{
-                    this.props.navigation.replace('Home')      //Account Type: Elderly
+                    this.props.navigation.replace('Opening Page')      //Account Type: Elderly
                 };
                 console.log(value);
             }
@@ -104,6 +108,7 @@ function App() {
                 <Stack.Screen name="Send a Message" component={SendAMessage} />
                 <Stack.Screen name="Chart" component={Chart} />
                 <Stack.Screen name="Profile" component={Profile} />
+                <Stack.Screen options={{headerShown: false}} name="Opening Page" component={Opening} />
             </Stack.Navigator>
         </NavigationContainer>
     );

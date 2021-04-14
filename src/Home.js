@@ -59,7 +59,7 @@ class HomeScreen extends React.Component{
                     <View style={styles_default.buttonContainer}>
                         <Button
                             title="Music"
-                            onPress={() => Alert.alert('Right button pressed')}
+                            onPress={() => this.props.navigation.navigate('Opening Page')}
                         />
                     </View>
                 </View>

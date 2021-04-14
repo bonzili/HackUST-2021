@@ -9,12 +9,11 @@ const styles_default = StyleSheet.create({
         backgroundColor: '#FFFDE9',
     },
     title: {
-        fontFamily: 'Quicksand',
+        fontFamily: 'AbrilFatface',
         textAlign: 'center',
         marginVertical: 8,
         color: '#011F8C',
         fontSize: 25,
-        fontWeight: 'bold',
     },
     header: {
         flex: 4,
