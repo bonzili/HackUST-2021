@@ -37,7 +37,6 @@ class AcType extends React.Component{
         } finally {
             this._storedeafultData();
             this.props.navigation.replace('Opening Page');
-            //this._retrieveData();
         }
     }
     _storedeafultData = async () => {
@@ -47,6 +46,9 @@ class AcType extends React.Component{
                 await AsyncStorage.setItem(
                     'child', "False"
                 );
+                await AsyncStorage.setItem(
+                    'profile', "False"
+                );
             }
         } catch (error) {
             // Error saving data
@@ -54,8 +56,7 @@ class AcType extends React.Component{
     };
     render() {
         return (
-            <SafeAreaView>
-            </SafeAreaView>
+            <View style={styles_default.emptyContainer}></View>
         );
 
     }

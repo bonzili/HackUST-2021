@@ -2,7 +2,6 @@ import React from 'react';
 import {
     Dimensions,
     Image,
-    Slider,
     StyleSheet,
     Text,
     TouchableHighlight,
@@ -25,30 +24,18 @@ class Icon {
 const ICON_RECORD_BUTTON = new Icon(require('./assets/images/record_button.png'), 70, 119);
 const ICON_RECORDING = new Icon(require('./assets/images/record_icon.png'), 20, 14);
 
-const ICON_PLAY_BUTTON = new Icon(require('./assets/images/play_button.png'), 34, 51);
-const ICON_PAUSE_BUTTON = new Icon(require('./assets/images/pause_button.png'), 34, 51);
-const ICON_STOP_BUTTON = new Icon(require('./assets/images/stop_button.png'), 22, 22);
-
-const ICON_MUTED_BUTTON = new Icon(require('./assets/images/muted_button.png'), 67, 58);
-const ICON_UNMUTED_BUTTON = new Icon(require('./assets/images/unmuted_button.png'), 67, 58);
-
-const ICON_TRACK_1 = new Icon(require('./assets/images/track_1.png'), 166, 5);
-const ICON_THUMB_1 = new Icon(require('./assets/images/thumb_1.png'), 18, 19);
-const ICON_THUMB_2 = new Icon(require('./assets/images/thumb_2.png'), 15, 19);
 
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get('window');
 const BACKGROUND_COLOR = '#fffde9';
 const LIVE_COLOR = '#FF0000';
 const DISABLED_OPACITY = 0.5;
-const RATE_SCALE = 3.0;
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.recording = null;
         this.sound = null;
-        this.isSeeking = false;
-        this.shouldPlayAtEndOfSeek = false;
+
         this.state = {
             haveRecordingPermissions: false,
             isLoading: false,
@@ -201,83 +188,6 @@ export default class App extends React.Component {
         }
     };
 
-    _onPlayPausePressed = () => {
-        if (this.sound != null) {
-            if (this.state.isPlaying) {
-                this.sound.pauseAsync();
-            } else {
-                this.sound.playAsync();
-            }
-        }
-    };
-
-    _onStopPressed = () => {
-        if (this.sound != null) {
-            this.sound.stopAsync();
-        }
-    };
-
-    _onMutePressed = () => {
-        if (this.sound != null) {
-            this.sound.setIsMutedAsync(!this.state.muted);
-        }
-    };
-
-    _onVolumeSliderValueChange = value => {
-        if (this.sound != null) {
-            this.sound.setVolumeAsync(value);
-        }
-    };
-
-    _trySetRate = async (rate, shouldCorrectPitch) => {
-        if (this.sound != null) {
-            try {
-                await this.sound.setRateAsync(rate, shouldCorrectPitch);
-            } catch (error) {
-                // Rate changing could not be performed, possibly because the client's Android API is too old.
-            }
-        }
-    };
-
-    _onRateSliderSlidingComplete = async value => {
-        this._trySetRate(value * RATE_SCALE, this.state.shouldCorrectPitch);
-    };
-
-    _onPitchCorrectionPressed = async value => {
-        this._trySetRate(this.state.rate, !this.state.shouldCorrectPitch);
-    };
-
-    _onSeekSliderValueChange = value => {
-        if (this.sound != null && !this.isSeeking) {
-            this.isSeeking = true;
-            this.shouldPlayAtEndOfSeek = this.state.shouldPlay;
-            this.sound.pauseAsync();
-        }
-    };
-
-    _onSeekSliderSlidingComplete = async value => {
-        if (this.sound != null) {
-            this.isSeeking = false;
-            const seekPosition = value * this.state.soundDuration;
-            if (this.shouldPlayAtEndOfSeek) {
-                this.sound.playFromPositionAsync(seekPosition);
-            } else {
-                this.sound.setPositionAsync(seekPosition);
-            }
-        }
-    };
-
-    _getSeekSliderPosition() {
-        if (
-            this.sound != null &&
-            this.state.soundPosition != null &&
-            this.state.soundDuration != null
-        ) {
-            return this.state.soundPosition / this.state.soundDuration;
-        }
-        return 0;
-    }
-
     _getMMSSFromMillis(millis) {
         const totalSeconds = millis / 1000;
         const seconds = Math.floor(totalSeconds % 60);
@@ -293,18 +203,6 @@ export default class App extends React.Component {
         return padWithZero(minutes) + ':' + padWithZero(seconds);
     }
 
-    _getPlaybackTimestamp() {
-        if (
-            this.sound != null &&
-            this.state.soundPosition != null &&
-            this.state.soundDuration != null
-        ) {
-            return `${this._getMMSSFromMillis(this.state.soundPosition)} / ${this._getMMSSFromMillis(
-                this.state.soundDuration
-            )}`;
-        }
-        return '';
-    }
 
     _getRecordingTimestamp() {
         if (this.state.recordingDuration != null) {
@@ -314,12 +212,6 @@ export default class App extends React.Component {
     }
 
     render() {
-        /*if(!this.state.fontLoaded) {
-            return (
-                <View style={styles.emptyContainer} />
-            )
-        }
-*/
         if (!this.state.haveRecordingPermissions){
             return (
                 <View style={styles.container}>
@@ -354,7 +246,7 @@ export default class App extends React.Component {
                         <View style={styles.recordingDataContainer}>
                             <View />
                             <Text style={[styles.liveText]}>
-                                {this.state.isRecording ? 'LIVE' : ''}
+                                {this.state.isRecording ? 'Recording' : ''}
                             </Text>
                             <View style={styles.recordingDataRowContainer}>
                                 <Image
@@ -406,7 +298,7 @@ const styles = StyleSheet.create({
     },
     recordingContainer: {
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
         alignSelf: 'stretch',
@@ -431,18 +323,7 @@ const styles = StyleSheet.create({
         minHeight: ICON_RECORDING.height,
         maxHeight: ICON_RECORDING.height,
     },
-    playbackContainer: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        alignSelf: 'stretch',
-        minHeight: ICON_THUMB_1.height * 2.0,
-        maxHeight: ICON_THUMB_1.height * 2.0,
-    },
-    playbackSlider: {
-        alignSelf: 'stretch',
-    },
+
     liveText: {
         color: LIVE_COLOR,
     },
@@ -467,37 +348,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
     },
-    buttonsContainerTopRow: {
-        maxHeight: ICON_MUTED_BUTTON.height,
-        alignSelf: 'stretch',
-        paddingRight: 20,
-    },
-    playStopContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        minWidth: (ICON_PLAY_BUTTON.width + ICON_STOP_BUTTON.width) * 3.0 / 2.0,
-        maxWidth: (ICON_PLAY_BUTTON.width + ICON_STOP_BUTTON.width) * 3.0 / 2.0,
-    },
-    volumeContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        minWidth: DEVICE_WIDTH / 2.0,
-        maxWidth: DEVICE_WIDTH / 2.0,
-    },
-    volumeSlider: {
-        width: DEVICE_WIDTH / 2.0 - ICON_MUTED_BUTTON.width,
-    },
-    buttonsContainerBottomRow: {
-        maxHeight: ICON_THUMB_1.height,
-        alignSelf: 'stretch',
-        paddingRight: 20,
-        paddingLeft: 20,
-    },
-    rateSlider: {
-        width: DEVICE_WIDTH / 2.0,
-    },
+    
 });

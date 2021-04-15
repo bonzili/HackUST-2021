@@ -42,6 +42,8 @@ class Profile extends React.Component{
                     this.props.navigation.replace('Edit Profile')
                 }
 
+            }else{
+                this.props.navigation.replace('Edit Profile')
             }
         } catch (error) {
         }finally {
