@@ -27,9 +27,6 @@ class Chart extends React.Component{
     render() {
         return (
             <View>
-                <Text>
-                    Count: {chart_data[0]["count"]}
-                </Text>
                 <LineChart
                     data={{
                         labels: this.label,
