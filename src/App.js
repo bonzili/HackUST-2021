@@ -35,10 +35,25 @@ class AcType extends React.Component{
         } catch (error) {
             console.log(error)
         } finally {
-            this._retrieveData();
+            this._storedeafultData();
+            this.props.navigation.replace('Opening Page');
+            //this._retrieveData();
         }
     }
+    _storedeafultData = async () => {
+        try {
+            const value = await AsyncStorage.getItem('child');
+            if (value === null){
+                await AsyncStorage.setItem(
+                    'child', "False"
+                );
+            }
+        } catch (error) {
+            // Error saving data
+        }
+    };
 
+/*
     _retrieveData = async () => {
         try {
             const value = await AsyncStorage.getItem('child');
@@ -91,8 +106,13 @@ class AcType extends React.Component{
                     </View>
                 </View>
             </SafeAreaView>
+
+
         );
+
     }
+
+ */
 }
 
 const Stack = createStackNavigator();
