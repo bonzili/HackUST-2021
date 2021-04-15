@@ -8,6 +8,10 @@ const styles_default = StyleSheet.create({
         flexDirection: 'column',
         backgroundColor: '#FFFDE9',
     },
+    emptyContainer: {
+        alignSelf: "stretch",
+        backgroundColor: '#FFFDE9',
+    },
     title: {
         fontFamily: 'AbrilFatface',
         textAlign: 'center',
@@ -21,10 +25,18 @@ const styles_default = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    red_separator: {
+        marginVertical: 5,
+        marginHorizontal: 20 ,
+        width: 130,
+        height: 15,
+        backgroundColor: '#B01A1A',
+        borderRadius: 10
+    },
     separator: {
-        marginVertical: 8,
-        borderBottomColor: '#737373',
+        borderBottomColor: '#B01A1A',
         borderBottomWidth: StyleSheet.hairlineWidth,
+        marginHorizontal: 15,
     },
     space: {
         width: 20,

@@ -1,59 +1,114 @@
 import * as React from 'react';
-import {Button, View, Text, SafeAreaView, Alert, AsyncStorage} from 'react-native';
+import {View, Text, SafeAreaView, Alert, AsyncStorage} from 'react-native';
 import styles_default from "../styles";
-
+import {Button} from 'react-native-elements'
 class Profile extends React.Component{
     constructor(props) {
         super(props);
-        try {
-            const profile_data = require('./profiledata.json');
-            this.name = profile_data["name"]
-            this.gender = profile_data["gender"]
-            this.age = profile_data["age"]
-            this.birth_month = profile_data["birth_month"]
-            this.birth_date = profile_data["birth_date"]
-            this.telnum = profile_data["telnum"]
-            this.cloud = profile_data["cloud"]
-            this.child = profile_data["child"]
-        }
-        catch (err){
-            this.props.navigation.navigate('Edit Profile')
+        this.state = {
+            gender: "",
+            name: "",
+            age: "",
+            birth_month: "",
+            birth_date: "",
+            telnum: "",
+            profileLoaded: false,
         }
     }
 
     componentDidMount() {
-        this._retrieveProfileExist();
+        this._retrieveProfile();
     }
 
-    _retrieveProfileExist = async () => {
+    _retrieveProfile = async () => {
         try {
             const value = await AsyncStorage.getItem('profile');
             if (value !== null) {
-                console.log(value);
-            }
-            if (value == null){
-                if (value === "False") {
+                if (value === "True"){
+                    const name = await AsyncStorage.getItem('name');
+                    this.state.name = name;
+                    const age = await AsyncStorage.getItem('age');
+                    this.state.age = age;
+                    const gender = await AsyncStorage.getItem('gender');
+                    this.state.gender = gender;
+                    const birth_date = await AsyncStorage.getItem('birth_date');
+                    this.state.birth_date = birth_date;
+                    const birth_month = await AsyncStorage.getItem('birth_month');
+                    this.state.birth_month = birth_month;
+                    const telnum = await AsyncStorage.getItem('telnum');
+                    this.state.telnum = telnum;
+                }
+                if (value === "False"){
                     this.props.navigation.replace('Edit Profile')
                 }
+
             }
         } catch (error) {
-            this.props.navigation.replace('Edit Profile')
+        }finally {
+            this.setState({ profileLoaded: true });
         }
     };
 
     render() {
-        return (
-            <SafeAreaView style={styles_default.container}>
-                <View style={styles_default.horizontal_container}>
-                    <View style={styles_default.buttonContainer}>
-                        <Button
-                            title="Just Talk"
-                            onPress={() => this.props.navigation.replace('Edit Profile')}
-                        />
+        if (!this.state.profileLoaded) {
+            return <View style={styles_default.emptyContainer} />;
+        }else{
+            return (
+                <SafeAreaView style={[styles_default.container,{justifyContent: 'flex-start'}]}>
+                    <View style={[{alignItems:'flex-start',marginLeft:25}]}>
+                        <Text style={[styles_default.title,{fontSize:35,alignItems:'flex-start',fontFamily:'AbrilFatface'}]}>
+                            {this.state.name}
+                        </Text>
                     </View>
-                </View>
-            </SafeAreaView>
-        );
+                    <View style={styles_default.red_separator}/>
+                    <View style={[styles_default.horizontal_container,{flex:1,marginRight:25,marginLeft:25,alignItems: 'flex-start',justifyContent: 'flex-start'}]}>
+                        <Text style={[styles_default.title,{fontSize:30,marginVertical:0,fontFamily:'QuicksandBold',color: '#237CA1'}]}>
+                            {this.state.gender === "M"? "Male":"Female"}
+                        </Text>
+                        <Text style={[styles_default.title,{fontSize:30,marginVertical:0,fontFamily:'QuicksandBold',color: '#237CA1'}]}>
+                            , Age: {this.state.age}
+                        </Text>
+                    </View>
+                    <View style={[styles_default.horizontal_container,{flex:1,marginRight:20,marginLeft:20}]}>
+                        <View style={styles_default.buttonContainer}>
+                            <Button
+                                title="Edit"
+                                onPress={() => {this.props.navigation.replace('Edit Profile')}}
+                                titleStyle={{fontFamily:'QuicksandBold',color: '#011F8C',fontSize:20}}
+                                buttonStyle={{borderRadius: 15,paddingHorizontal:80,backgroundColor:'#FFB808'}}
+                            />
+                        </View>
+                    </View>
+                    <View style={[styles_default.horizontal_container,{flex:1,marginRight:25,marginLeft:25,alignItems: 'flex-start',justifyContent: 'space-between'}]}>
+                        <Text style={[styles_default.title,{fontSize:30,marginHorizontal:10,fontFamily:'Quicksand',color: '#237CA1'}]}>
+                            {this.state.telnum}
+                        </Text>
+                        <View style={[styles_default.buttonContainer,{justifyContent: 'flex-end'}]}>
+                        <Button
+                            title="Share"
+                            onPress={() => Alert.alert('To be implemented')}
+                            titleStyle={{fontFamily:'QuicksandBold',color: '#011F8C',fontSize:20}}
+                            buttonStyle={{borderRadius: 15,paddingHorizontal:50,backgroundColor:'#FF8654'}}
+                        />
+                        </View>
+                    </View>
+                    <View style={styles_default.separator}/>
+                    <View style={[styles_default.horizontal_container,{flex:1,marginRight:25,marginLeft:25,alignItems: 'flex-start',justifyContent: 'flex-start'}]}>
+                        <Text style={[styles_default.title,{fontSize:30,marginVertical:0,fontFamily:'AbrilFatface',color: '#237CA1'}]}>
+                            Birthday
+                        </Text>
+                    </View>
+                    <View style={[styles_default.horizontal_container,{flex:1,marginRight:25,marginLeft:25,alignItems: 'flex-start',justifyContent: 'flex-start'}]}>
+                        <Text style={[styles_default.title,{fontSize:30,marginVertical:0,fontFamily:'QuicksandBold',color: '#237CA1'}]}>
+                            {this.state.birth_date}/
+                        </Text>
+                        <Text style={[styles_default.title,{fontSize:30,marginVertical:0,fontFamily:'QuicksandBold',color: '#237CA1'}]}>
+                            {this.state.birth_month}
+                        </Text>
+                    </View>
+                </SafeAreaView>
+            );
+        }
     }
 }
 

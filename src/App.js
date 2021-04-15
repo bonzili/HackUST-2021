@@ -52,67 +52,74 @@ class AcType extends React.Component{
             // Error saving data
         }
     };
-
-/*
-    _retrieveData = async () => {
-        try {
-            const value = await AsyncStorage.getItem('child');
-            if (value !== null) {
-                if (value === "True"){
-                    this.props.navigation.replace('Opening Page');       //Account Type: Child
-                }else if (value === "False"){
-                    this.props.navigation.replace('Opening Page')      //Account Type: Elderly
-                };
-                console.log(value);
-            }
-        } catch (error) {
-            // Error retrieving data
-        }
-    };
-
-    _storeData = async (actype) => {
-        try {
-            await AsyncStorage.setItem(
-                'child', actype
-            );
-        } catch (error) {
-            // Error saving data
-        }
-    };
-
     render() {
         return (
-
-            <SafeAreaView style={styles_default.container}>
-                <View style={styles_default.header}>
-                    <Text style={styles_default.title}>
-                        Login as:
-                    </Text>
-                </View>
-                <View style={styles_default.horizontal_container}>
-                    <View style={styles_default.buttonContainer}>
-                        <Button
-                            title="Child"
-                            onPress={() => {this._storeData("True"); this.props.navigation.replace('Home')}}
-                        />
-                    </View>
-                </View>
-                <View style={styles_default.horizontal_container}>
-                    <View style={styles_default.buttonContainer}>
-                        <Button
-                            title="Elderly"
-                            onPress={() => {this._storeData("False"); this.props.navigation.replace('Home')}}
-                        />
-                    </View>
-                </View>
+            <SafeAreaView>
             </SafeAreaView>
-
-
         );
 
     }
 
- */
+    /*
+        _retrieveData = async () => {
+            try {
+                const value = await AsyncStorage.getItem('child');
+                if (value !== null) {
+                    if (value === "True"){
+                        this.props.navigation.replace('Opening Page');       //Account Type: Child
+                    }else if (value === "False"){
+                        this.props.navigation.replace('Opening Page')      //Account Type: Elderly
+                    };
+                    console.log(value);
+                }
+            } catch (error) {
+                // Error retrieving data
+            }
+        };
+
+        _storeData = async (actype) => {
+            try {
+                await AsyncStorage.setItem(
+                    'child', actype
+                );
+            } catch (error) {
+                // Error saving data
+            }
+        };
+
+        render() {
+            return (
+
+                <SafeAreaView style={styles_default.container}>
+                    <View style={styles_default.header}>
+                        <Text style={styles_default.title}>
+                            Login as:
+                        </Text>
+                    </View>
+                    <View style={styles_default.horizontal_container}>
+                        <View style={styles_default.buttonContainer}>
+                            <Button
+                                title="Child"
+                                onPress={() => {this._storeData("True"); this.props.navigation.replace('Home')}}
+                            />
+                        </View>
+                    </View>
+                    <View style={styles_default.horizontal_container}>
+                        <View style={styles_default.buttonContainer}>
+                            <Button
+                                title="Elderly"
+                                onPress={() => {this._storeData("False"); this.props.navigation.replace('Home')}}
+                            />
+                        </View>
+                    </View>
+                </SafeAreaView>
+
+
+            );
+
+        }
+
+     */
 }
 
 const Stack = createStackNavigator();

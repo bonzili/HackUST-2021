@@ -11,12 +11,12 @@ class EditProfile extends React.Component{
         super(props);
         this.state = {
             selectedIndex: 0,
-            selectedIndexAcType: 0,
+            selectedIndexAcType: 1,
             name: "",
-            age: 0,
-            birth_month: 0,
-            birth_date: 0,
-            telnum: 0,
+            age: "",
+            birth_month: "",
+            birth_date: "",
+            telnum: "",
         }
         this.updateIndex = this.updateIndex.bind(this)
         this.updateIndexActype = this.updateIndexActype.bind(this)
