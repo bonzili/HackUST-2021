@@ -9,63 +9,118 @@ import {Button} from 'react-native-elements';
 class EditProfile extends React.Component{
     constructor(props) {
         super(props);
-        this.ProfileExist = false;
         this.state = {
-            selectedGenderIndex: 1,
-            selectedAcTypeIndex: 1,
+            selectedIndex: 0,
+            selectedIndexAcType: 0,
             name: "",
             age: 0,
             birth_month: 0,
-            birth_day: 0,
+            birth_date: 0,
             telnum: 0,
-            cloud: 0,
         }
         this.updateIndex = this.updateIndex.bind(this)
-        this.updateAcTypeIndex = this.updateAcTypeIndex.bind(this)
-    }
-    updateIndex (selectedGenderIndex) {
-        this.setState({selectedGenderIndex})
-    }
-    updateAcTypeIndex (selectedAcTypeIndex) {
-        this.setState({selectedAcTypeIndex})
+        this.updateIndexActype = this.updateIndexActype.bind(this)
+        this.refname = React.createRef();
+        this.refage = React.createRef();
+        this.refbirth_month = React.createRef();
+        this.refbirth_date = React.createRef();
+        this.reftelnum = React.createRef();
     }
 
     componentDidMount() {
-        this._retrieveProfileExist();
-        this._retrieveAcType();
+        this._retrieveProfile();
     }
 
-    _retrieveProfileExist = async () => {
+    updateIndex (selectedIndex) {
+        this.setState({selectedIndex})
+    }
+    updateIndexActype (selectedIndexAcType) {
+        this.setState({selectedIndexAcType})
+    }
+    _retrieveProfile = async () => {
         try {
-            const value = await AsyncStorage.getItem('ProfileExist');
+            const value = await AsyncStorage.getItem('profile');
             if (value !== null) {
-                this.ProfileExist = true;
-            }
-        } catch (error) {
-            this.ProfileExist = false;
-        }
-    };
-
-    _retrieveAcType = async () => {
-        try {
-            const value = await AsyncStorage.getItem('child');
-            if (value !== null) {
-                if (value) {
-                    this.setState({selectedAcTypeIndex: 0})
-                } else {
-                    this.setState({selectedAcTypeIndex: 1})
+                if (value === "True"){
+                    const name = await AsyncStorage.getItem('name');
+                    this.state.name = name;
+                    const age = await AsyncStorage.getItem('age');
+                    this.state.age = age;
+                    const gender = await AsyncStorage.getItem('gender');
+                    if (gender === "M"){
+                        this.state.selectedIndex = 0
+                    }else if (gender === "F"){
+                        this.state.selectedIndex = 1
+                    }
+                    const birth_date = await AsyncStorage.getItem('birth_date');
+                    this.state.birth_date = birth_date;
+                    const birth_month = await AsyncStorage.getItem('birth_month');
+                    this.state.birth_month = birth_month;
+                    const telnum = await AsyncStorage.getItem('telnum');
+                    this.state.telnum = telnum;
+                    const child = await AsyncStorage.getItem('child');
+                    if (child === "True"){
+                        this.state.selectedIndexAcType = 0
+                    }else if (child === "False"){
+                        this.state.selectedIndexAcType = 1
+                    }
+                    this.refname.current.setNativeProps({ text: this.state.name });
+                    this.refage.current.setNativeProps({ text: this.state.age });
+                    this.refbirth_month.current.setNativeProps({ text: this.state.birth_month });
+                    this.refbirth_date.current.setNativeProps({ text: this.state.birth_date });
+                    this.reftelnum.current.setNativeProps({ text: this.state.telnum });
                 }
             }
         } catch (error) {
         }
     };
 
+    _storeProfile = async () => {
+        try {
+            await AsyncStorage.setItem(
+                'name', this.state.name
+            );
+            if (this.state.selectedIndex === 0){
+                await AsyncStorage.setItem(
+                    'gender', 'M'
+                );
+            }else{
+                await AsyncStorage.setItem(
+                    'gender', 'F'
+                );
+            }
+            await AsyncStorage.setItem(
+                'age', this.state.age
+            );
+            await AsyncStorage.setItem(
+                'birth_month', this.state.birth_month
+            );
+            await AsyncStorage.setItem(
+                'birth_date', this.state.birth_date
+            );
+            await AsyncStorage.setItem(
+                'telnum', this.state.telnum
+            );
+            await AsyncStorage.setItem(
+                'profile', "True"
+            );
+            if (this.state.selectedIndexAcType === 0){
+                await AsyncStorage.setItem(
+                    'child', 'True'
+                );
+            }else{
+                await AsyncStorage.setItem(
+                    'child', 'False'
+                );
+            }
+        } catch (error) {
+            // Error saving data
+        }
+    };
 
     render() {
-        const buttons = ['Male', 'Female']
-        const { selectedGenderIndex } = this.state
-        const buttonsAcType = ['Child', 'Elderly']
-        const { selectedAcTypeIndex } = this.state
+        const { selectedIndex } = this.state
+        const { selectedIndexAcType } = this.state
         return (
             <SafeAreaView style={[styles_default.container,{paddingTop: StatusBar.currentHeight}]}>
                 <ScrollView style={styles.scrollView}>
@@ -80,6 +135,7 @@ class EditProfile extends React.Component{
                     <View style = {[styles_default.space,{height: 5}]}></View>
                     <View style={[styles_default.horizontal_container,{flex:2,marginRight:20,marginLeft:20}]}>
                         <Input
+                            ref={this.refname}
                             errorMessage="Please enter a correct name!"
                             leftIcon={<Icon name="user" size={20} />}
                             placeholder="Enter Name"
@@ -92,13 +148,14 @@ class EditProfile extends React.Component{
                         </Text>
                         <ButtonGroup
                             onPress={this.updateIndex}
-                            selectedIndex={selectedGenderIndex}
-                            buttons={buttons}
+                            selectedIndex={selectedIndex}
+                            buttons={['Male', 'Female']}
                             containerStyle={{width:100}}
                         />
                     </View>
                     <View style={[styles_default.horizontal_container,{flex:2,marginRight:20,marginLeft:20}]}>
                         <Input
+                            ref={this.refage}
                             errorMessage="Please enter a correct age!"
                             leftIcon={<Icon name="calendar" size={20} />}
                             placeholder="Age"
@@ -110,6 +167,7 @@ class EditProfile extends React.Component{
                 </Text>
                     <View style={[styles_default.horizontal_container,{flex:2,marginRight:20,marginLeft:20}]}>
                             <Input
+                                ref={this.refbirth_month}
                                 containerStyle={{flex:1}}
                                 errorMessage="Please enter a correct month!"
                                 leftIcon={<Icon name="birthday-cake" size={20} />}
@@ -117,14 +175,16 @@ class EditProfile extends React.Component{
                                 onChangeText={value => this.setState({ birth_month: value })}
                             />
                             <Input
+                                ref={this.refbirth_date}
                                 containerStyle={{flex:1}}
-                            errorMessage="Please enter a correct day!"
-                            placeholder="Day"
-                            onChangeText={value => this.setState({ birth_day: value })}
+                                errorMessage="Please enter a correct day!"
+                                placeholder="Day"
+                                onChangeText={value => this.setState({ birth_date: value })}
                             />
                     </View>
                     <View style={[styles_default.horizontal_container,{flex:2,marginRight:20,marginLeft:20}]}>
                         <Input
+                            ref={this.reftelnum}
                             errorMessage="Please enter a correct phone number!"
                             leftIcon={<Icon name="phone" size={20} />}
                             placeholder="Phone Number"
@@ -136,9 +196,9 @@ class EditProfile extends React.Component{
                             Account Type:
                         </Text>
                         <ButtonGroup
-                            onPress={this.updateAcTypeIndex}
-                            selectedIndex={selectedAcTypeIndex}
-                            buttons={buttonsAcType}
+                            onPress={this.updateIndexActype}
+                            selectedIndex={selectedIndexAcType}
+                            buttons={['Child', 'Elderly']}
                             containerStyle={{width:100}}
                         />
                     </View>
@@ -147,7 +207,7 @@ class EditProfile extends React.Component{
                         <View style={styles_default.buttonContainer}>
                             <Button
                                 title="Save"
-                                onPress={() => Alert.alert('To be implemented')}
+                                onPress={() => {this._storeProfile(); this.props.navigation.replace('Profile')}}
                                 titleStyle={{fontFamily:'QuicksandBold',color: '#FFB800',fontSize:20}}
                                 buttonStyle={{borderRadius: 15,paddingHorizontal:80,backgroundColor:'#B01A1A'}}
                             />

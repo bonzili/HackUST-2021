@@ -43,9 +43,9 @@ class AcType extends React.Component{
         try {
             const value = await AsyncStorage.getItem('child');
             if (value !== null) {
-                if (value){
+                if (value === "True"){
                     this.props.navigation.replace('Opening Page');       //Account Type: Child
-                }else{
+                }else if (value === "False"){
                     this.props.navigation.replace('Opening Page')      //Account Type: Elderly
                 };
                 console.log(value);
@@ -78,7 +78,7 @@ class AcType extends React.Component{
                     <View style={styles_default.buttonContainer}>
                         <Button
                             title="Child"
-                            onPress={() => {this._storeData(true); this.props.navigation.replace('Home')}}
+                            onPress={() => {this._storeData("True"); this.props.navigation.replace('Home')}}
                         />
                     </View>
                 </View>
@@ -86,7 +86,7 @@ class AcType extends React.Component{
                     <View style={styles_default.buttonContainer}>
                         <Button
                             title="Elderly"
-                            onPress={() => {this._storeData(false); this.props.navigation.replace('Home')}}
+                            onPress={() => {this._storeData("False"); this.props.navigation.replace('Home')}}
                         />
                     </View>
                 </View>

@@ -27,12 +27,14 @@ class Profile extends React.Component{
 
     _retrieveProfileExist = async () => {
         try {
-            const value = await AsyncStorage.getItem('ProfileExist');
+            const value = await AsyncStorage.getItem('profile');
             if (value !== null) {
                 console.log(value);
             }
             if (value == null){
-                this.props.navigation.replace('Edit Profile')
+                if (value === "False") {
+                    this.props.navigation.replace('Edit Profile')
+                }
             }
         } catch (error) {
             this.props.navigation.replace('Edit Profile')
@@ -42,67 +44,13 @@ class Profile extends React.Component{
     render() {
         return (
             <SafeAreaView style={styles_default.container}>
-                <View style={styles_default.header}>
-                    <Text style={styles_default.title}>
-                        Tales of the Old 老聲長談
-                    </Text>
-                    <Text style={styles_default.title}>
-                        Welcome Back, {}
-                    </Text>
-                    <Text style={styles_default.title}>
-                        What do you want to do today?
-                    </Text>
-                </View>
                 <View style={styles_default.horizontal_container}>
                     <View style={styles_default.buttonContainer}>
                         <Button
                             title="Just Talk"
-                            onPress={() => navigation.navigate('Just Talk')}
+                            onPress={() => this.props.navigation.replace('Edit Profile')}
                         />
                     </View>
-                    <View style={styles_default.space} />
-                    <View style={styles_default.buttonContainer}>
-                        <Button
-                            title="Send a Message"
-                            onPress={() => navigation.navigate('Send a Message')}
-                        />
-                    </View>
-                </View>
-                <View style={styles_default.horizontal_container}>
-                    <View style={styles_default.buttonContainer}>
-                        <Button
-                            title="Trip Down Memory Lane"
-                            onPress={() => navigation.navigate('Trip Down Memory Lane')}
-                        />
-                    </View>
-                    <View style={styles_default.space} />
-                    <View style={styles_default.buttonContainer}>
-                        <Button
-                            title="Music"
-                            onPress={() => Alert.alert('Right button pressed')}
-                        />
-                    </View>
-                </View>
-                <View style={styles_default.horizontal_container}>
-                    <View style={styles_default.buttonContainer}>
-                        <Button
-                            title="Edit Profile"
-                            onPress={() => navigation.navigate('Profile')}
-                        />
-                    </View>
-                    <View style={styles_default.space} />
-                    <View style={styles_default.buttonContainer}>
-                        <Button
-                            title="Add Contact"
-                            onPress={() => Alert.alert('Right button pressed')}
-                        />
-                    </View>
-                </View>
-                <View style={styles_default.horizontal_container}>
-                    <Button
-                        title="Help"
-                        onPress={() => navigation.navigate('Chart')}
-                    />
                 </View>
             </SafeAreaView>
         );
