@@ -13,6 +13,7 @@ import HomeScreen from "./Home";
 import * as Font from 'expo-font';
 import Opening from "./Opening";
 import EditProfile from "./Profile/Edit Profile";
+import JustChat from "./JustChat";
 
 class AcType extends React.Component{
     constructor(props) {
@@ -133,6 +134,7 @@ function App() {
                 <Stack.Screen options={{title: ''}} name= "Account Type" component={AcType} />
                 <Stack.Screen options={{title: ''}} name="Home" component={HomeScreen} />
                 <Stack.Screen options={{title: ''}} name="Just Talk" component={JustTalk} />
+                <Stack.Screen options={{title: ''}} name="Just Chat" component={JustChat} />
                 <Stack.Screen options={{title: ''}} name="Trip Down Memory Lane" component={TDML} />
                 <Stack.Screen options={{title: ''}} name="Send a Message" component={SendAMessage} />
                 <Stack.Screen options={{title: ''}} name="Chart" component={Chart} />
