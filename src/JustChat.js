@@ -30,8 +30,6 @@ class App extends React.Component {
         }] , maintext: "testing",
     };
 
-
-
     counter = 1;
     random_user_id = Math.floor(Math.random() * 10000000000).toString();
 
@@ -59,7 +57,7 @@ class App extends React.Component {
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({user_id: this.random_user_id, count: count, text: "hi"})
+            body: JSON.stringify({user_id: this.random_user_id, count: count, text: query})
         }).then(res => res.json())
             .then(res => this.handleResponse(res));
 
@@ -109,9 +107,7 @@ class App extends React.Component {
 }
 
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get('window');
-const BACKGROUND_COLOR = '#fffde9';
-const LIVE_COLOR = '#FF0000';
-const DISABLED_OPACITY = 0.5;
+const BACKGROUND_COLOR = '#FFFDE9';
 
 const styles = StyleSheet.create({
     emptyContainer: {
