@@ -4,7 +4,7 @@ An mobile application that aim at bridging the gap of distance and communication
 
 
 ## Install Standalone Apps
-[Click here to download - Android](Build/Memory%20by%20Memory%20-%20Prebuilt.apk)
+[Click here to download - Android](download/Memory%20by%20Memory%20-%20Prebuilt.apk)
 ## Setup
 To run this project, install it locally using npm and yarn:
 
