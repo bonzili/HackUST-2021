@@ -5,6 +5,7 @@ import styles_default from "./styles";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import JustTalk from "./JustTalk/JustTalk";
+import JustChat from "./JustChat/JustChat";
 import TDML from "./TDML";
 import SendAMessage from "./SendAMessage";
 import Chart from "./Chart";
@@ -137,7 +138,8 @@ function App() {
                 <Stack.Screen options={{title: ''}} name="Send a Message" component={SendAMessage} />
                 <Stack.Screen options={{title: ''}} name="Chart" component={Chart} />
                 <Stack.Screen options={{title: ''}} name="Profile" component={Profile} />
-                <Stack.Screen options={{title: ''}} name="Edit Profile" component={EditProfile} />
+                <Stack.Screen options={{ title: '' }} name="Edit Profile" component={EditProfile} />
+                <Stack.Screen options={{ title: '' }} name="Just Chat" component={JustChat} />
                 <Stack.Screen options={{headerShown: false,title:''}} name="Opening Page" component={Opening} />
             </Stack.Navigator>
         </NavigationContainer>

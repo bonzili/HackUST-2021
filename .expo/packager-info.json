@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
+  "expoServerPort": 19000,
+  "packagerPort": 19000,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://qf-h3w.anonymous.hackust-2021.exp.direct",
+  "packagerNgrokUrl": "https://packager.qf-h3w.anonymous.hackust-2021.exp.direct",
+  "ngrokPid": 92591,
   "webpackServerPort": null
 }
