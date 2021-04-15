@@ -12,6 +12,7 @@ import Profile from "./Profile/Profile";
 import HomeScreen from "./Home";
 import * as Font from 'expo-font';
 import Opening from "./Opening";
+import EditProfile from "./Profile/Edit Profile";
 
 class AcType extends React.Component{
     constructor(props) {
@@ -34,64 +35,91 @@ class AcType extends React.Component{
         } catch (error) {
             console.log(error)
         } finally {
-            this._retrieveData();
+            this._storedeafultData();
+            this.props.navigation.replace('Opening Page');
+            //this._retrieveData();
         }
     }
-
-    _retrieveData = async () => {
+    _storedeafultData = async () => {
         try {
             const value = await AsyncStorage.getItem('child');
-            if (value !== null) {
-                if (value === 'True'){
-                    this.props.navigation.replace('Opening Page');       //Account Type: Child
-                }else{
-                    this.props.navigation.replace('Opening Page')      //Account Type: Elderly
-                };
-                console.log(value);
+            if (value === null){
+                await AsyncStorage.setItem(
+                    'child', "False"
+                );
             }
-        } catch (error) {
-            // Error retrieving data
-        }
-    };
-
-    _storeData = async (actype) => {
-        try {
-            await AsyncStorage.setItem(
-                'child', actype
-            );
         } catch (error) {
             // Error saving data
         }
     };
-
     render() {
         return (
-
-            <SafeAreaView style={styles_default.container}>
-                <View style={styles_default.header}>
-                    <Text style={styles_default.title}>
-                        Login as:
-                    </Text>
-                </View>
-                <View style={styles_default.horizontal_container}>
-                    <View style={styles_default.buttonContainer}>
-                        <Button
-                            title="Child"
-                            onPress={() => {this._storeData('True'); this.props.navigation.replace('Home')}}
-                        />
-                    </View>
-                </View>
-                <View style={styles_default.horizontal_container}>
-                    <View style={styles_default.buttonContainer}>
-                        <Button
-                            title="Elderly"
-                            onPress={() => {this._storeData('False'); this.props.navigation.replace('Home')}}
-                        />
-                    </View>
-                </View>
+            <SafeAreaView>
             </SafeAreaView>
         );
+
     }
+
+    /*
+        _retrieveData = async () => {
+            try {
+                const value = await AsyncStorage.getItem('child');
+                if (value !== null) {
+                    if (value === "True"){
+                        this.props.navigation.replace('Opening Page');       //Account Type: Child
+                    }else if (value === "False"){
+                        this.props.navigation.replace('Opening Page')      //Account Type: Elderly
+                    };
+                    console.log(value);
+                }
+            } catch (error) {
+                // Error retrieving data
+            }
+        };
+
+        _storeData = async (actype) => {
+            try {
+                await AsyncStorage.setItem(
+                    'child', actype
+                );
+            } catch (error) {
+                // Error saving data
+            }
+        };
+
+        render() {
+            return (
+
+                <SafeAreaView style={styles_default.container}>
+                    <View style={styles_default.header}>
+                        <Text style={styles_default.title}>
+                            Login as:
+                        </Text>
+                    </View>
+                    <View style={styles_default.horizontal_container}>
+                        <View style={styles_default.buttonContainer}>
+                            <Button
+                                title="Child"
+                                onPress={() => {this._storeData("True"); this.props.navigation.replace('Home')}}
+                            />
+                        </View>
+                    </View>
+                    <View style={styles_default.horizontal_container}>
+                        <View style={styles_default.buttonContainer}>
+                            <Button
+                                title="Elderly"
+                                onPress={() => {this._storeData("False"); this.props.navigation.replace('Home')}}
+                            />
+                        </View>
+                    </View>
+                </SafeAreaView>
+
+
+            );
+
+        }
+
+     */
 }
 
 const Stack = createStackNavigator();
@@ -101,14 +129,15 @@ function App() {
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Account Type"
                              screenOptions={{headerStyle: {backgroundColor: '#B01A1A',}, headerTintColor: '#fff',}}>
-                <Stack.Screen name= "Account Type" component={AcType} />
-                <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="Just Talk" component={JustTalk} />
-                <Stack.Screen name="Trip Down Memory Lane" component={TDML} />
-                <Stack.Screen name="Send a Message" component={SendAMessage} />
-                <Stack.Screen name="Chart" component={Chart} />
-                <Stack.Screen name="Profile" component={Profile} />
-                <Stack.Screen options={{headerShown: false}} name="Opening Page" component={Opening} />
+                <Stack.Screen options={{title: ''}} name= "Account Type" component={AcType} />
+                <Stack.Screen options={{title: ''}} name="Home" component={HomeScreen} />
+                <Stack.Screen options={{title: ''}} name="Just Talk" component={JustTalk} />
+                <Stack.Screen options={{title: ''}} name="Trip Down Memory Lane" component={TDML} />
+                <Stack.Screen options={{title: ''}} name="Send a Message" component={SendAMessage} />
+                <Stack.Screen options={{title: ''}} name="Chart" component={Chart} />
+                <Stack.Screen options={{title: ''}} name="Profile" component={Profile} />
+                <Stack.Screen options={{title: ''}} name="Edit Profile" component={EditProfile} />
+                <Stack.Screen options={{headerShown: false,title:''}} name="Opening Page" component={Opening} />
             </Stack.Navigator>
         </NavigationContainer>
     );

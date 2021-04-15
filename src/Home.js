@@ -75,7 +75,7 @@ class HomeScreen extends React.Component{
                 <View style={[styles_default.horizontal_container,{flex:2,marginRight:20,marginLeft:20}]}>
                     <View style={styles_default.buttonContainer}>
                         <Button
-                            title="Edit Profile"
+                            title="My Profile"
                             onPress={() => this.props.navigation.navigate('Profile')}
                             titleStyle={{fontFamily:'QuicksandBold',color: '#7DD8FF',fontSize:20}}
                             buttonStyle={{paddingVertical:40,borderRadius: 15 ,backgroundColor:'#237CA1'}}
