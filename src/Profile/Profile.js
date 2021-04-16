@@ -6,12 +6,12 @@ class Profile extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            gender: "",
-            name: "",
-            age: "",
-            birth_month: "",
-            birth_date: "",
-            telnum: "",
+            gender: "Gender",
+            name: "Name",
+            age: "Age",
+            birth_month: "Month",
+            birth_date: "Date",
+            telnum: "Phone num",
             profileLoaded: false,
         }
     }

@@ -51,7 +51,7 @@ class Opening extends React.Component{
                         buttonStyle={{ borderWidth: 55 , backgroundColor:'#FF7575', borderColor:'#FF7575', borderRadius: 20}}
                         titleStyle={{ color: "#011F8C" , fontSize:30, fontFamily: "QuicksandMedium"}}
                         title="Let's Talk:)"
-                        onPress={() => this.props.navigation.navigate('Just Talk')}
+                        onPress={() => this.props.navigation.navigate('Just Chat')}
                     />
                 </View>
                 <View style={styles_default.header}>
@@ -71,10 +71,5 @@ class Opening extends React.Component{
 }
 
 
-const styles = StyleSheet.create({
-    box: {
-        width: 50,
-        height: 50,
-    },
-});
+
 export default Opening;
