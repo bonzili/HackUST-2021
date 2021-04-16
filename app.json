@@ -24,7 +24,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#FFFDE9"
       },
       "package": "com.hackust2021Delta.MemorybyMemory",
       "versionCode": 1

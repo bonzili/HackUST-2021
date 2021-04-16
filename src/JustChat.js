@@ -11,11 +11,12 @@ import {
     GiftedChat
 } from 'react-native-gifted-chat';
 
+const boticon = require('../assets/icon_280_280.png')
 
 const BOT_USER = {
     _id: 2,
     name: 'Memo',
-    avatar: 'https://i.imgur.com/7k12EPD.png'
+    avatar: boticon
 };
 
 const fetch = require('node-fetch');
@@ -27,7 +28,7 @@ class App extends React.Component {
             text: `Hi, I am Memo. I am your memory keeper in the Memory By Memory App. Please start by saying hi.`,
             createdAt: new Date(),
             user: BOT_USER
-        }] , maintext: "testing",
+        }]
     };
 
     counter = 1;
@@ -47,7 +48,6 @@ class App extends React.Component {
         this.sendBotResponse(text);
         this.counter += 1;
     };
-
 
 
     requestQuery(query , count){;
@@ -97,7 +97,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <View style={{flex: 1,backgroundColor: '#fff'}} >
+            <View style={{flex: 1,backgroundColor: '#FFFDE9'}} >
                 <GiftedChat messages = {this.state.messages} onSend = {messages => this.onSend(messages)}
                             user={{ _id: 1 }} />
             </View>
@@ -107,23 +107,5 @@ class App extends React.Component {
 }
 
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get('window');
-const BACKGROUND_COLOR = '#FFFDE9';
-
-const styles = StyleSheet.create({
-    emptyContainer: {
-        alignSelf: 'stretch',
-        backgroundColor: BACKGROUND_COLOR,
-    },
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        alignSelf: 'stretch',
-        backgroundColor: BACKGROUND_COLOR,
-        minHeight: DEVICE_HEIGHT,
-        maxHeight: DEVICE_HEIGHT,
-    },
-});
 
 export default App;
