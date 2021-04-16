@@ -1,14 +1,16 @@
-var profile = new Object();
-profile.name = "Raj";
-profile.gender = "M";
-profile.age  = 32;
-profile.birth_month = 4;
-profile.birth_date = 17;
-profile.telnum = 12345678;
-profile.cloud = false;
-var profile_json= JSON.stringify(profile);
-console.log(profile_json)
+const fetch = require('node-fetch');
 
-var testing = require('./Profile/profiledata.json')
-var read_profile = JSON.parse(profile_json)
-console.log(testing["name"])
+function test(result){
+
+    console.log(result)
+}
+
+fetch('http://23.21.182.147:8001/text/', {
+    method: 'post',
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({user_id: 7, count: 5, text: "hi"})
+}).then(res => res.json())
+    .then(res => test(res));

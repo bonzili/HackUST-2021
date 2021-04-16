@@ -6,11 +6,10 @@ An mobile application that aim at bridging the gap of distance and communication
 ## Install Standalone Apps
 [Click here to download - Android](download/Memory%20by%20Memory%20-%20Prebuilt.apk)
 ## Setup
-To run this project, install it locally using npm and yarn:
-
 Requirements:
+[Node.js LTS release](https://nodejs.org/en/), [Git](https://git-scm.com/), [Yarn](https://classic.yarnpkg.com/en/docs/install)
 
-[Expo](https://docs.expo.io/get-started/installation/)
+To run this project, install it locally using npm or yarn.
 
 ```bash
 npm install --global expo-cli

@@ -11,6 +11,7 @@ import { Asset } from 'expo-asset';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
+import * as Speech from 'expo-speech'
 
 class Icon {
     constructor(module, width, height) {
@@ -180,7 +181,14 @@ export default class App extends React.Component {
         });
     }
 
+    listVoices = async() => {
+        let voices = await Speech.getAvailableVoicesAsync()
+        console.log('Voices:', voices)
+    }
+
     _onRecordPressed = () => {
+        //Speech.speak('Hello How Are You',{language:'en-US'})
+
         if (this.state.isRecording) {
             this._stopRecordingAndEnablePlayback();
         } else {
@@ -348,5 +356,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
     },
-    
+
 });

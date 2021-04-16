@@ -27,6 +27,9 @@ class Chart extends React.Component{
     render() {
         return (
             <View>
+                <Text>
+                    Sentiment_level:
+                </Text>
                 <LineChart
                     data={{
                         labels: this.label,

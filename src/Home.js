@@ -39,27 +39,27 @@ class HomeScreen extends React.Component{
                         <Button
                             title="Just Talk"
                             onPress={() => this.props.navigation.navigate('Just Talk')}
-                            titleStyle={{fontFamily:'QuicksandBold',color: '#011F8C',fontSize:25}}
-                            buttonStyle={{paddingVertical:45,borderRadius: 15 ,backgroundColor:'#FF7575'}}
+                            titleStyle={{fontFamily:'QuicksandBold',color: '#011F8C',fontSize:20}}
+                            buttonStyle={{paddingVertical:40,borderRadius: 15 ,backgroundColor:'#FF7575'}}
                         />
                     </View>
                     <View style={styles_default.space}/>
                     <View style={styles_default.buttonContainer}>
                         <Button
-                            title={"Send a Message"}
-                            onPress={() => Alert.alert('To be implemented')}
-                            titleStyle={{fontFamily:'QuicksandBold',color: '#237CA1',fontSize:25}}
-                            buttonStyle={{paddingVertical:30,borderRadius: 15 ,backgroundColor:'#FFB800'}}
+                            title={"Send Message"}
+                            onPress={() => this.props.navigation.navigate('Just Chat')}
+                            titleStyle={{fontFamily:'QuicksandBold',color: '#237CA1',fontSize:20}}
+                            buttonStyle={{paddingVertical:40,borderRadius: 15 ,backgroundColor:'#FFB800'}}
                         />
                     </View>
                 </View>
                 <View style={[styles_default.horizontal_container,{flex:2,marginRight:20,marginLeft:20}]}>
                     <View style={styles_default.buttonContainer}>
                         <Button
-                            title="Trip Down Memory Lane"
+                            title="Memory Lane"
                             onPress={() => this.props.navigation.navigate('Trip Down Memory Lane')}
                             titleStyle={{fontFamily:'QuicksandBold',color: '#237CA1',fontSize:20}}
-                            buttonStyle={{paddingVertical:30,borderRadius: 15 ,backgroundColor:'#FFE2D6'}}
+                            buttonStyle={{paddingVertical:40,borderRadius: 15 ,backgroundColor:'#FFE2D6'}}
                         />
                     </View>
                     <View style={styles_default.space}/>

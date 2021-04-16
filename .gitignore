@@ -4,7 +4,7 @@
 
 # Xcode
 #
-download/
+build/
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -23,7 +23,7 @@ DerivedData
 
 # Android/IntelliJ
 #
-download/
+build/
 .idea
 .gradle
 local.properties
@@ -57,3 +57,8 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+#web cache
+/.expo/web/cache/
+/.expo/
+/.expo-shared/
