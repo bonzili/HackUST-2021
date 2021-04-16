@@ -11,9 +11,9 @@ or [Use the Expo App to connect](https://expo.io/@bonzili/projects/HackUST-2021)
 Web preview (For preview only. Most of the function do not work on web): [https://memorybymemory.vercel.app/](https://memorybymemory.vercel.app/)
 
 ## Main feature:
-- Chatbot (working)
+- Chatbot (Functional)
 - Voicebot (In progress)
-- User proile (working)
+- User proile (Functional)
 
 ## Setup
 Requirements:
