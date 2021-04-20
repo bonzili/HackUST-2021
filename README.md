@@ -15,6 +15,12 @@ Web preview (For preview only. Most of the function do not work on web): [https:
 - Voicebot (In progress)
 - User proile (Functional)
 
+## Screenshots:
+Front Page |  Home Page | Profile Page |
+:-------------------------:|:-------------------------:|:-------------------------:
+![](./screenshots/screenshots_front.PNG) |  ![](./screenshots/screenshots_home.PNG) | ![](./screenshots/screenshots_profile.PNG)
+
+
 ## Setup
 Requirements:
 [Node.js LTS release](https://nodejs.org/en/), [Git](https://git-scm.com/), [Yarn](https://classic.yarnpkg.com/en/docs/install)
