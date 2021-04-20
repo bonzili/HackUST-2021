@@ -25,7 +25,7 @@ class App extends React.Component {
     state = {
         messages: [{
             _id: 1,
-            text: `Hi, I am Memo. I am your memory keeper in the Memory By Memory App. Please start by saying hi.`,
+            text: `Hi, I am Memo! I am your memory keeper in the Memory By Memory App! Please start by saying hi ٩(●ᴗ●)۶`,
             createdAt: new Date(),
             user: BOT_USER
         }]
