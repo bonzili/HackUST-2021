@@ -51,7 +51,7 @@ class App extends React.Component {
 
 
     requestQuery(query , count){;
-        fetch('http://23.21.182.147:8001/text/', {
+        fetch('https://23.21.182.147:8001/text/', {
             method: 'post',
             headers: {
                 'Accept': 'application/json, text/plain, */*',

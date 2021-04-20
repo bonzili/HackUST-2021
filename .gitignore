@@ -62,3 +62,6 @@ buck-out/
 /.expo/web/cache/
 /.expo/
 /.expo-shared/
+
+.vercel
+/web-build/
