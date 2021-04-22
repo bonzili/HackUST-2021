@@ -32,3 +32,6 @@ npm install --global expo-cli
 yarn add expo
 expo start
 ```
+
+## License
+The MemorybyMemory source code is made available under the [MIT license](LICENSE). 
